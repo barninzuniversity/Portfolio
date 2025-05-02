@@ -2,8 +2,9 @@ services:
   - type: web
     name: portfolio
     env: node
+    nodeVersion: 20.11.1
     buildCommand: npm install --production=false --legacy-peer-deps && npm run build
-    startCommand: npm start
+    startCommand: npm start -p $PORT
     autoDeploy: true
     envVars:
       - key: NODE_ENV
