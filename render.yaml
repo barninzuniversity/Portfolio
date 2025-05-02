@@ -3,14 +3,19 @@ services:
     name: portfolio
     env: node
     nodeVersion: 20.11.1
-    buildCommand: npm install --production=false --legacy-peer-deps && npm run build
-    startCommand: npm start -p $PORT
+    buildCommand: >
+      export NODE_OPTIONS=--max_old_space_size=4096 &&
+      rm -f .node-version &&
+      echo "20.11.1" > .node-version &&
+      npm install --production=false --legacy-peer-deps &&
+      npm run build
+    startCommand: npm start
     autoDeploy: true
     envVars:
       - key: NODE_ENV
         value: production
-      - key: NEXT_PUBLIC_APP_URL
-        value: https://portfolio.onrender.com  # Update with your actual domain when assigned
+      - key: NODE_VERSION
+        value: 20.11.1
     healthCheckPath: /
     numInstances: 1
     plan: free
