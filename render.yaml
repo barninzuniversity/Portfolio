@@ -2,12 +2,24 @@ services:
   - type: web
     name: portfolio
     env: node
-    buildCommand: npm install && npm run build
+    buildCommand: npm install --production=false --legacy-peer-deps && npm run build
     startCommand: npm start
     autoDeploy: true
     envVars:
       - key: NODE_ENV
         value: production
+      - key: NEXT_PUBLIC_APP_URL
+        value: https://portfolio.onrender.com  # Update with your actual domain when assigned
     healthCheckPath: /
     numInstances: 1
     plan: free
+    buildFilter:
+      paths:
+        - app/**
+        - components/**
+        - lib/**
+        - public/**
+        - hooks/**
+        - styles/**
+        - package.json
+        - next.config.mjs

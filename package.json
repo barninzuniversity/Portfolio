@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p $PORT",
     "lint": "next lint",
     "postinstall": "next build"
   },
@@ -60,14 +60,14 @@
     "vaul": "^0.9.6",
     "zod": "^3.24.1",
     "@emotion/is-prop-valid": "latest",
-    "framer-motion": "latest"
+    "framer-motion": "latest",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.17"
   },
   "devDependencies": {
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.17",
     "typescript": "^5"
   },
   "engines": {
