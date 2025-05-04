@@ -7,12 +7,13 @@
     "build": "npm install --production=false --legacy-peer-deps && next build",
     "export": "next export",
     "static-build": "npm install --production=false --legacy-peer-deps && next build && next export",
-    "start": "next start -p $PORT",
+    "start": "npx serve@latest out -p $PORT",
     "lint": "next lint",
     "postbuild": "cp public/index-fallback.html out/index-fallback.html || true"
   },
   "dependencies": {
     "@emotion/is-prop-valid": "latest",
+    "serve": "^14.2.1",
     "@hookform/resolvers": "^3.9.1",
     "@radix-ui/react-accordion": "^1.2.2",
     "@radix-ui/react-alert-dialog": "^1.1.4",
