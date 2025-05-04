@@ -1,5 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Enable static exports to reduce server requirements
+  output: 'export',
+  
+  // Optimize bundle size with webpack configuration
   webpack: (config) => {
     // Optimize bundle size
     config.optimization.minimize = true;
@@ -28,16 +32,25 @@ const nextConfig = {
     return config;
   },
   
-  // Removed invalid experimental.serverMemoryBasedTurbopack option
+  // Use SWC minify for better performance
+  swcMinify: true,
+  
+  // Add trailing slashes for better compatibility with static hosting
+  trailingSlash: true,
+  
+  // Disable server actions for static export
   experimental: {
-    // Only include valid experimental options
+    serverActions: false,
   },
   
+  // Disable powered-by header
   poweredByHeader: false,
   
+  // Configure images for static export
   images: {
+    unoptimized: true,
+    // Keep domains for any external images that might be used
     domains: ['portfolio-1-bda1.onrender.com'],
-    minimumCacheTTL: 60,
   },
 };
 

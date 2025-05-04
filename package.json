@@ -5,8 +5,11 @@
   "scripts": {
     "dev": "next dev",
     "build": "npm install --production=false --legacy-peer-deps && next build",
+    "export": "next export",
+    "static-build": "npm install --production=false --legacy-peer-deps && next build && next export",
     "start": "next start -p $PORT",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postbuild": "cp public/index-fallback.html out/index-fallback.html || true"
   },
   "dependencies": {
     "@emotion/is-prop-valid": "latest",
