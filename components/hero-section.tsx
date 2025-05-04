@@ -20,6 +20,10 @@ export default function HeroSection() {
 
     const particles: Particle[] = []
     const particleCount = 100
+    
+    // Store canvas dimensions to avoid null checks
+    const canvasWidth = canvas.width
+    const canvasHeight = canvas.height
 
     class Particle {
       x: number
@@ -30,8 +34,8 @@ export default function HeroSection() {
       color: string
 
       constructor() {
-        this.x = Math.random() * canvas.width
-        this.y = Math.random() * canvas.height
+        this.x = Math.random() * canvasWidth
+        this.y = Math.random() * canvasHeight
         this.size = Math.random() * 3 + 1
         this.speedX = Math.random() * 3 - 1.5
         this.speedY = Math.random() * 3 - 1.5
@@ -42,11 +46,11 @@ export default function HeroSection() {
         this.x += this.speedX
         this.y += this.speedY
 
-        if (this.x > canvas.width || this.x < 0) {
+        if (this.x > canvasWidth || this.x < 0) {
           this.speedX = -this.speedX
         }
 
-        if (this.y > canvas.height || this.y < 0) {
+        if (this.y > canvasHeight || this.y < 0) {
           this.speedY = -this.speedY
         }
       }
@@ -61,13 +65,14 @@ export default function HeroSection() {
     }
 
     const init = () => {
+      particles.length = 0 // Clear existing particles
       for (let i = 0; i < particleCount; i++) {
         particles.push(new Particle())
       }
     }
 
     const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      ctx.clearRect(0, 0, canvasWidth, canvasHeight)
 
       for (let i = 0; i < particles.length; i++) {
         particles[i].update()
@@ -96,9 +101,14 @@ export default function HeroSection() {
     animate()
 
     const handleResize = () => {
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
-      init()
+      if (canvas) {
+        canvas.width = window.innerWidth
+        canvas.height = window.innerHeight
+        // Update cached dimensions
+        canvasWidth = canvas.width
+        canvasHeight = canvas.height
+        init()
+      }
     }
 
     window.addEventListener("resize", handleResize)
@@ -197,4 +207,3 @@ export default function HeroSection() {
     </section>
   )
 }
-

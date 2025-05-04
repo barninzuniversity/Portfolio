@@ -28,13 +28,11 @@ const nextConfig = {
     return config;
   },
   
-  // Increase build memory allocation
+  // Removed invalid experimental.serverMemoryBasedTurbopack option
   experimental: {
-    serverMemoryBasedTurbopack: true,
+    // Only include valid experimental options
   },
   
-  // Set higher memory limit (though this is more effective via environment variables)
-  // This setting is more a hint than a strict allocation
   poweredByHeader: false,
   
   images: {
