@@ -60,7 +60,7 @@ export default function AboutSection() {
             </motion.div>
 
             <motion.p variants={itemVariants} className="text-lg text-gray-300 mb-6">
-              I'm a passionate Full-Stack Developer with around 1 year of experience specializing in Django and modern
+              I'm a passionate Full-Stack Developer with over 5 years of experience specializing in Django and modern
               web technologies. My journey in software development began with a fascination for building things that
               live on the internet.
             </motion.p>
