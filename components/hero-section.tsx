@@ -21,9 +21,9 @@ export default function HeroSection() {
     const particles: Particle[] = []
     const particleCount = 100
     
-    // Store canvas dimensions to avoid null checks
-    const canvasWidth = canvas.width
-    const canvasHeight = canvas.height
+    // Store canvas dimensions as mutable variables, not constants
+    let canvasWidth = canvas.width
+    let canvasHeight = canvas.height
 
     class Particle {
       x: number
@@ -104,7 +104,7 @@ export default function HeroSection() {
       if (canvas) {
         canvas.width = window.innerWidth
         canvas.height = window.innerHeight
-        // Update cached dimensions
+        // Update cached dimensions - now using mutable variables
         canvasWidth = canvas.width
         canvasHeight = canvas.height
         init()
