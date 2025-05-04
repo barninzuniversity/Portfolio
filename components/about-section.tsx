@@ -1,12 +1,19 @@
 "use client"
 
 import { useRef } from "react"
-import { motion, useInView } from "framer-motion"
+import { motion, useInView, useScroll, useTransform } from "framer-motion"
 import Image from "next/image"
 
 export default function AboutSection() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: false, amount: 0.3 })
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"]
+  })
+  
+  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0])
+  const y = useTransform(scrollYProgress, [0, 0.5, 1], [50, 0, -50])
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -28,6 +35,14 @@ export default function AboutSection() {
       },
     },
   }
+  
+  // Skill items with animation variations
+  const skillItems = [
+    { name: "Django", color: "from-purple-500 to-blue-500", delay: 0.2 },
+    { name: "Python", color: "from-blue-500 to-cyan-500", delay: 0.3 },
+    { name: "React", color: "from-pink-500 to-purple-500", delay: 0.4 },
+    { name: "SQL", color: "from-green-500 to-emerald-500", delay: 0.5 }
+  ];
 
   return (
     <section id="about" className="py-20 relative overflow-hidden">
@@ -40,15 +55,61 @@ export default function AboutSection() {
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
           className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
+          style={{ 
+            opacity, 
+            y
+          }}
         >
           <motion.div variants={itemVariants} className="relative">
-            <div className="relative w-full h-[500px] rounded-2xl overflow-hidden">
+            <div className="relative w-full h-[500px] rounded-2xl overflow-hidden group">
               <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-blue-500/20 z-10 mix-blend-overlay"></div>
-              <Image src="/ibrahim-profile.jpg" alt="Ibrahim Zaouali" fill className="object-cover" />
+              <Image 
+                src="/ibrahim-profile.jpg" 
+                alt="Ibrahim Zaouali" 
+                fill 
+                priority
+                className="object-cover transition-transform duration-1000 group-hover:scale-105" 
+              />
+              
+              {/* Floating Skill Bubbles */}
+              <div className="absolute inset-0 z-20 pointer-events-none">
+                {skillItems.map((skill, index) => (
+                  <motion.div
+                    key={index}
+                    className={`absolute rounded-full bg-gradient-to-br ${skill.color} text-white font-medium text-sm flex items-center justify-center h-16 w-16 shadow-lg`}
+                    style={{
+                      x: `${(index * 25) - 30}%`,
+                      y: `${(index * 20) + 10}%`,
+                      opacity: 0.8,
+                    }}
+                    animate={{
+                      y: [`${(index * 20) + 10}%`, `${(index * 20) + 15}%`, `${(index * 20) + 10}%`],
+                    }}
+                    transition={{
+                      y: {
+                        duration: 2,
+                        repeat: Infinity,
+                        repeatType: "reverse",
+                        delay: skill.delay,
+                      }
+                    }}
+                  >
+                    {skill.name}
+                  </motion.div>
+                ))}
+              </div>
             </div>
 
-            <div className="absolute -bottom-5 -right-5 w-40 h-40 bg-gradient-to-br from-purple-500 to-blue-500 rounded-full blur-3xl opacity-30 animate-pulse"></div>
-            <div className="absolute -top-5 -left-5 w-40 h-40 bg-gradient-to-br from-pink-500 to-purple-500 rounded-full blur-3xl opacity-30 animate-pulse"></div>
+            <motion.div 
+              className="absolute -bottom-5 -right-5 w-40 h-40 bg-gradient-to-br from-purple-500 to-blue-500 rounded-full blur-3xl opacity-30"
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{ duration: 4, repeat: Infinity }}
+            />
+            <motion.div 
+              className="absolute -top-5 -left-5 w-40 h-40 bg-gradient-to-br from-pink-500 to-purple-500 rounded-full blur-3xl opacity-30"
+              animate={{ scale: [1, 1.3, 1] }}
+              transition={{ duration: 5, repeat: Infinity }}
+            />
           </motion.div>
 
           <div>
@@ -88,7 +149,11 @@ export default function AboutSection() {
                     transition={{ duration: 0.5, delay: 0.8 + index * 0.1 }}
                     className="flex items-start gap-3"
                   >
-                    <span className="inline-block w-2 h-2 mt-2 rounded-full bg-gradient-to-r from-purple-500 to-blue-500"></span>
+                    <motion.span 
+                      className="inline-block w-2 h-2 mt-2 rounded-full bg-gradient-to-r from-purple-500 to-blue-500"
+                      animate={{ scale: [1, 1.5, 1] }}
+                      transition={{ duration: 2, delay: index * 0.2, repeat: Infinity }}
+                    />
                     <span>{item}</span>
                   </motion.li>
                 ))}
