@@ -65,7 +65,8 @@ function FloatingText({ text, position, rotation, size = 1, color = "#ffffff" })
       onPointerOver={() => setHovered(true)}
       onPointerOut={() => setHovered(false)}
     >
-      <Text ref={textRef} fontSize={size} color={color} anchorX="center" anchorY="middle" font="/fonts/Inter_Bold.json">
+      {/* Using default font instead of requiring Inter_Bold.json */}
+      <Text ref={textRef} fontSize={size} color={color} anchorX="center" anchorY="middle">
         {text}
       </Text>
     </animated.group>
